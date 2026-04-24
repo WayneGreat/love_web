@@ -1,0 +1,58 @@
+export interface TimelineEntry {
+    date: string;
+    title: string;
+    desc: string;
+    image: string;
+}
+
+export interface ThemeColor {
+    primary: string;
+    gradientFrom: string;
+    gradientTo: string;
+}
+
+export interface SiteConfig {
+    bgMusic: string;
+    themeColor: ThemeColor;
+    timeline: TimelineEntry[];
+    letter: string;
+}
+
+const siteConfig: SiteConfig = {
+    bgMusic: "music/bgm.mp3",
+    themeColor: {
+        primary: "#e91e63",
+        gradientFrom: "#fce4ec",
+        gradientTo: "#f8bbd0",
+    },
+    timeline: [
+        {
+            date: "2023-05-20",
+            title: "第一次见面",
+            desc: "那天阳光很好，我们在咖啡店聊了一下午...",
+            image: "images/pic1.jpg",
+        },
+        {
+            date: "2023-08-15",
+            title: "第一次旅行",
+            desc: "我们一起去了海边，看了最美的日落...",
+            image: "images/pic2.jpg",
+        },
+        {
+            date: "2023-12-25",
+            title: "第一个圣诞节",
+            desc: "在圣诞树下交换礼物，这是最温暖的冬天...",
+            image: "images/pic3.jpg",
+        },
+        {
+            date: "2024-05-20",
+            title: "一周年纪念日",
+            desc: "一年了，感谢有你的每一天...",
+            image: "images/pic4.jpg",
+        },
+    ],
+    letter:
+        "亲爱的，\n\n从我们相遇的那天起，每一天都变得特别。感谢你一直以来的陪伴和理解，让我成为了更好的人。\n\n未来的路，我们一起走。\n\n永远爱你的",
+};
+
+export default siteConfig;
