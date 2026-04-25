@@ -6,7 +6,6 @@ function MusicPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const hasInteractedRef = useRef(false);
 
     // Autoplay on mount: try play(), fall back to first-interaction activation
     useEffect(() => {
@@ -25,13 +24,11 @@ function MusicPlayer() {
                         try {
                             await audio.play();
                             setIsPlaying(true);
-                            hasInteractedRef.current = true;
                         } catch {
                             // Silently ignore — user can still click the button
                         }
                     };
                     document.addEventListener("click", activateOnInteraction, { once: true });
-                    document.addEventListener("touchstart", activateOnInteraction, { once: true });
                 }
             }
         };
@@ -41,7 +38,6 @@ function MusicPlayer() {
         return () => {
             if (activateOnInteraction) {
                 document.removeEventListener("click", activateOnInteraction);
-                document.removeEventListener("touchstart", activateOnInteraction);
             }
         };
     }, []);
@@ -51,7 +47,10 @@ function MusicPlayer() {
         const audio = audioRef.current;
         if (!audio) return;
 
-        const handleError = () => setIsDisabled(true);
+        const handleError = () => {
+            setIsDisabled(true);
+            setIsPlaying(false);
+        };
         audio.addEventListener("error", handleError);
         return () => audio.removeEventListener("error", handleError);
     }, []);
