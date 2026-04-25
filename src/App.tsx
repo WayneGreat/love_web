@@ -1,5 +1,6 @@
 import ParticleBackground from "./components/ParticleBackground";
 import Timeline from "./components/Timeline";
+import MusicPlayer from "./components/MusicPlayer";
 
 function App() {
     return (
@@ -8,6 +9,7 @@ function App() {
             <div className="relative z-10">
                 <Timeline />
             </div>
+            <MusicPlayer />
         </div>
     );
 }
