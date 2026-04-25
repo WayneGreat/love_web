@@ -25,6 +25,7 @@ function Timeline() {
                     <div
                         key={entry.date}
                         ref={(el) => { sectionRefs.current[i] = el; }}
+                        className="snap-start"
                     >
                         <TimelineSection
                             entry={entry}
