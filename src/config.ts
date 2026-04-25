@@ -17,12 +17,18 @@ export interface IntroConfig {
     hint: string;
 }
 
+export interface LetterConfig {
+    title: string;
+    body: string;
+    footer: string;
+}
+
 export interface SiteConfig {
     bgMusic: string;
     themeColor: ThemeColor;
     intro: IntroConfig;
     timeline: TimelineEntry[];
-    letter: string;
+    letter: LetterConfig;
 }
 
 const siteConfig: SiteConfig = {
@@ -75,8 +81,11 @@ const siteConfig: SiteConfig = {
             image: "images/pic6.png",
         },
     ],
-    letter:
-        "亲爱的，\n\n从我们相遇的那天起，每一天都变得特别。感谢你一直以来的陪伴和理解，让我成为了更好的人。\n\n未来的路，我们一起走。\n\n永远爱你的",
+    letter: {
+        title: "给你的一封信",
+        body: "亲爱的，\n\n从我们相遇的那天起，每一天都变得特别。感谢你一直以来的陪伴和理解，让我成为了更好的人。\n\n未来的路，我们一起走。\n\n永远爱你的",
+        footer: "愿我们的故事一直继续下去 ✨",
+    },
 };
 
 export default siteConfig;

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import config from "../config";
 
 const flapVariants = {
     closed: {
@@ -43,19 +44,18 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
         >
             {/* Title */}
             <h2 className="text-3xl sm:text-4xl font-bold text-rose-700 mb-10 font-handwriting tracking-wide">
-                给你的一封信
+                {config.letter.title}
             </h2>
 
             {/* Envelope container */}
             <div className="relative" style={{ perspective: 800 }}>
                 {/* Envelope body */}
-                <div className="w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-b from-pink-100 to-pink-200 rounded-xl shadow-2xl relative border-4 border-pink-300 overflow-visible">
+                <div className="w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-b from-pink-100 to-pink-200 rounded-xl shadow-2xl relative border-4 border-pink-300">
                     {/* Flap */}
                     <motion.div
-                        className="absolute top-0 left-0 right-0 h-[100px] sm:h-[110px] bg-gradient-to-b from-pink-400 to-pink-300 z-10"
+                        className="absolute top-0 left-0 right-0 h-[100px] sm:h-[110px] bg-gradient-to-b from-pink-400 to-pink-300 z-10 origin-top"
                         style={{
                             clipPath: "polygon(0 0, 50% 100%, 100% 0)",
-                            transformOrigin: "top",
                         }}
                         variants={flapVariants}
                         animate={isOpen ? "open" : "closed"}
@@ -65,7 +65,9 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
                     <AnimatePresence>
                         {!isOpen && (
                             <motion.button
+                                type="button"
                                 onClick={handleOpen}
+                                aria-expanded={isOpen}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1, transition: { duration: 0.2, delay: 1.1 } }}
                                 exit={{ opacity: 0, transition: { duration: 0.2 } }}
@@ -80,7 +82,7 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
 
             {/* Footer text */}
             <p className="text-sm text-rose-500 italic tracking-wide mt-6">
-                愿我们的故事一直继续下去 ✨
+                {config.letter.footer}
             </p>
         </motion.div>
     );
