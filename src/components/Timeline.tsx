@@ -2,8 +2,10 @@ import { useCallback, useRef, useState } from "react";
 import config from "../config";
 import TimelineSection from "./TimelineSection";
 import TimelineNav from "./TimelineNav";
+import LetterEnvelope from "./LetterEnvelope";
 
 function Timeline() {
+    const totalSections = config.timeline.length + 1;
     const [activeIndex, setActiveIndex] = useState(0);
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -34,10 +36,19 @@ function Timeline() {
                         />
                     </div>
                 ))}
+                <div
+                    ref={(el) => { sectionRefs.current[config.timeline.length] = el; }}
+                    className="snap-start"
+                >
+                    <LetterEnvelope
+                        index={config.timeline.length}
+                        onInView={handleInView}
+                    />
+                </div>
             </div>
             <TimelineNav
                 activeIndex={activeIndex}
-                total={config.timeline.length}
+                total={totalSections}
                 onNavigate={handleNavigate}
             />
         </>
