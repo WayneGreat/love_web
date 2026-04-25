@@ -15,6 +15,12 @@ const containerVariants = {
             staggerChildren: 0.15,
         },
     },
+    exit: {
+        transition: {
+            staggerChildren: 0.05,
+            staggerDirection: -1,
+        },
+    },
 };
 
 const itemVariants = {
@@ -23,6 +29,11 @@ const itemVariants = {
         opacity: 1,
         y: 0,
         transition: { duration: 0.5, ease: "easeOut" as const },
+    },
+    exit: {
+        opacity: 0,
+        y: -20,
+        transition: { duration: 0.3, ease: "easeIn" as const },
     },
 };
 
@@ -33,6 +44,11 @@ const imageVariants = {
         y: 0,
         scale: 1,
         transition: { duration: 0.5, ease: "easeOut" as const },
+    },
+    exit: {
+        opacity: 0,
+        scale: 0.9,
+        transition: { duration: 0.3, ease: "easeIn" as const },
     },
 };
 
@@ -51,7 +67,8 @@ function TimelineSection({ entry, index, onInView }: TimelineSectionProps) {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.5 }}
+            exit="exit"
+            viewport={{ once: false, amount: 0.5 }}
         >
             <div className="max-w-5xl w-full flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 <motion.div
