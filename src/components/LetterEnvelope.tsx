@@ -37,6 +37,11 @@ const textContainerVariants = {
     },
 };
 
+const rootVariants = {
+    hidden: { opacity: 0, transition: { duration: 0.6 } },
+    visible: { opacity: 1, transition: { duration: 0.6 } },
+};
+
 const textLineVariants = {
     closed: { opacity: 0 },
     open: {
@@ -63,9 +68,9 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
         <motion.div
             ref={ref}
             className="h-screen flex items-center justify-center px-6"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.6 }}
+            variants={rootVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
         >
             <div className="relative" style={{ perspective: 800 }}>
                 {/* Envelope body */}
@@ -84,7 +89,7 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
                     {/* Seal */}
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-rose-600 z-20 cursor-pointer shadow-md focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none"
+                        className={`absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-rose-600 cursor-pointer shadow-md focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none ${isOpen ? "z-0" : "z-20"}`}
                         aria-label="Open envelope"
                     >
                         <span className="block w-3 h-3 mx-auto mt-0.5 rounded-full border-2 border-rose-300" />
@@ -92,13 +97,15 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
 
                     {/* Letter */}
                     <motion.div
-                        className="absolute left-2.5 right-2.5 top-4 bottom-2 bg-white rounded-md shadow-inner p-5 pt-8 overflow-y-auto max-h-[200px] z-0"
+                        className={`absolute left-2.5 right-2.5 top-4 bottom-2 bg-white rounded-md shadow-inner p-5 pt-8 overflow-y-auto max-h-[200px] ${isOpen ? "z-[15]" : "z-0"}`}
                         variants={letterVariants}
                         animate={isOpen ? "open" : "closed"}
+                        aria-hidden={!isOpen}
                     >
                         {/* Close button */}
                         <button
                             onClick={() => setIsOpen(false)}
+                            tabIndex={isOpen ? 0 : -1}
                             className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-100 hover:bg-rose-200 flex items-center justify-center text-rose-500 text-xs font-bold focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none"
                             aria-label="Close envelope"
                         >
