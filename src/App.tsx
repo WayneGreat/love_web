@@ -22,10 +22,14 @@ function App() {
                     <IntroSplash onExit={handleIntroExit} />
                 )}
             </AnimatePresence>
-            <ParticleBackground />
-            <div className="relative z-10">
-                <Timeline />
-            </div>
+            {!showIntro && (
+                <>
+                    <ParticleBackground />
+                    <div className="relative z-10">
+                        <Timeline />
+                    </div>
+                </>
+            )}
             <MusicPlayer ref={musicPlayerRef} />
         </div>
     );

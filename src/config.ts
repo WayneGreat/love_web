@@ -35,7 +35,7 @@ const siteConfig: SiteConfig = {
     intro: {
         title: "我们的故事",
         subtitle: "从遇见你的那天起",
-        hint: "向下滚动 开启回忆",
+        hint: "点击开始回忆",
     },
     timeline: [
         {
