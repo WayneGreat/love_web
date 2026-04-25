@@ -18,6 +18,23 @@ const rootVariants = {
     visible: { opacity: 1, transition: { duration: 0.6 } },
 };
 
+const textContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.06, delayChildren: 0.4 },
+    },
+};
+
+const textLineVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.4, ease: "easeOut" as const },
+    },
+};
+
 interface LetterEnvelopeProps {
     index: number;
     onInView: (index: number) => void;
@@ -123,10 +140,19 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
                                     {config.letter.title}
                                 </h3>
 
-                                {/* Letter body */}
-                                <div className="font-handwriting text-rose-700 text-base sm:text-lg leading-relaxed whitespace-pre-line text-center px-2">
-                                    {config.letter.body}
-                                </div>
+                                {/* Letter body with staggered reveal */}
+                                <motion.div
+                                    className="font-handwriting text-rose-700 text-base sm:text-lg leading-relaxed text-center px-2"
+                                    variants={textContainerVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                >
+                                    {config.letter.body.split("\n").map((line, i) => (
+                                        <motion.p key={i} variants={textLineVariants} className="mb-1">
+                                            {line || " "}
+                                        </motion.p>
+                                    ))}
+                                </motion.div>
                             </div>
                         </motion.div>
                     </>
