@@ -15,10 +15,13 @@ const containerVariants = {
             staggerChildren: 0.15,
         },
     },
-    exit: {
+};
+
+const textContainerVariants = {
+    hidden: {},
+    visible: {
         transition: {
-            staggerChildren: 0.05,
-            staggerDirection: -1,
+            staggerChildren: 0.15,
         },
     },
 };
@@ -30,11 +33,6 @@ const itemVariants = {
         y: 0,
         transition: { duration: 0.5, ease: "easeOut" as const },
     },
-    exit: {
-        opacity: 0,
-        y: -20,
-        transition: { duration: 0.3, ease: "easeIn" as const },
-    },
 };
 
 const imageVariants = {
@@ -44,11 +42,6 @@ const imageVariants = {
         y: 0,
         scale: 1,
         transition: { duration: 0.5, ease: "easeOut" as const },
-    },
-    exit: {
-        opacity: 0,
-        scale: 0.9,
-        transition: { duration: 0.3, ease: "easeIn" as const },
     },
 };
 
@@ -66,14 +59,12 @@ function TimelineSection({ entry, index, onInView }: TimelineSectionProps) {
             className="h-screen snap-start flex items-center justify-center px-6"
             variants={containerVariants}
             initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: false, amount: 0.5 }}
+            animate={isInView ? "visible" : "hidden"}
         >
             <div className="max-w-5xl w-full flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 <motion.div
                     className="flex-1 text-center md:text-left"
-                    variants={containerVariants}
+                    variants={textContainerVariants}
                 >
                     <motion.p
                         className="text-sm text-rose-300 mb-2"
@@ -101,6 +92,7 @@ function TimelineSection({ entry, index, onInView }: TimelineSectionProps) {
                     <img
                         src={entry.image}
                         alt={entry.title}
+                        loading="lazy"
                         className="w-full max-h-[60vh] object-cover rounded-xl shadow-lg"
                     />
                 </motion.div>
