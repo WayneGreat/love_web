@@ -89,6 +89,7 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
                     {/* Seal */}
                     <button
                         onClick={() => setIsOpen(true)}
+                        tabIndex={isOpen ? -1 : 0}
                         className={`absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-rose-600 cursor-pointer shadow-md focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none ${isOpen ? "z-0" : "z-20"}`}
                         aria-label="Open envelope"
                     >
