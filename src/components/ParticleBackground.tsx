@@ -9,12 +9,16 @@ function ParticleBackground() {
     const [init, setInit] = useState(false);
 
     useEffect(() => {
+        let cancelled = false;
         initParticlesEngine(async (engine) => {
             await loadSlim(engine);
             await loadHeartShape(engine);
         }).then(() => {
-            setInit(true);
+            if (!cancelled) setInit(true);
+        }).catch((err) => {
+            console.error("Failed to initialize particles engine:", err);
         });
+        return () => { cancelled = true; };
     }, []);
 
     const particlesOptions = useMemo<ISourceOptions>(
