@@ -22,7 +22,7 @@ const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_props, r
                 // Silently ignore
             }
         },
-    }));
+    }), [isDisabled, isPlaying]);
 
     // Autoplay on mount: try play(), fall back to first-interaction activation
     useEffect(() => {

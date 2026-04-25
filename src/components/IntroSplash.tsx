@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import config from "../config";
 
@@ -7,34 +7,41 @@ interface IntroSplashProps {
 }
 
 function IntroSplash({ onExit }: IntroSplashProps) {
-    const handleExit = useCallback(() => {
-        onExit();
-    }, [onExit]);
-
     useEffect(() => {
+        let touchStartY = 0;
+
         const handleWheel = (e: WheelEvent) => {
             if (e.deltaY > 0) {
-                handleExit();
+                onExit();
             }
         };
 
-        const handleTouchMove = () => {
-            handleExit();
+        const handleTouchStart = (e: TouchEvent) => {
+            touchStartY = e.touches[0].clientY;
+        };
+
+        const handleTouchEnd = (e: TouchEvent) => {
+            const deltaY = e.changedTouches[0].clientY - touchStartY;
+            if (deltaY > 30) {
+                onExit();
+            }
         };
 
         window.addEventListener("wheel", handleWheel, { passive: true });
-        window.addEventListener("touchmove", handleTouchMove, { passive: true });
+        window.addEventListener("touchstart", handleTouchStart, { passive: true });
+        window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
         return () => {
             window.removeEventListener("wheel", handleWheel);
-            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("touchstart", handleTouchStart);
+            window.removeEventListener("touchend", handleTouchEnd);
         };
-    }, [handleExit]);
+    }, [onExit]);
 
     return (
         <motion.div
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-pink-50 to-pink-100 cursor-pointer select-none"
-            onClick={handleExit}
+            onClick={onExit}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ y: "-100%" }}
