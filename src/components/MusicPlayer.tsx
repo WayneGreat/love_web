@@ -13,13 +13,15 @@ function MusicPlayer() {
         const audio = audioRef.current;
         if (!audio) return;
 
+        let activateOnInteraction: (() => void) | null = null;
+
         const startPlay = async () => {
             try {
                 await audio.play();
                 setIsPlaying(true);
             } catch (err) {
                 if (err instanceof DOMException && err.name === "NotAllowedError") {
-                    const activateOnInteraction = async () => {
+                    activateOnInteraction = async () => {
                         try {
                             await audio.play();
                             setIsPlaying(true);
@@ -30,16 +32,18 @@ function MusicPlayer() {
                     };
                     document.addEventListener("click", activateOnInteraction, { once: true });
                     document.addEventListener("touchstart", activateOnInteraction, { once: true });
-
-                    return () => {
-                        document.removeEventListener("click", activateOnInteraction);
-                        document.removeEventListener("touchstart", activateOnInteraction);
-                    };
                 }
             }
         };
 
         startPlay();
+
+        return () => {
+            if (activateOnInteraction) {
+                document.removeEventListener("click", activateOnInteraction);
+                document.removeEventListener("touchstart", activateOnInteraction);
+            }
+        };
     }, []);
 
     // Handle audio error (e.g. file not found) — disable button silently
