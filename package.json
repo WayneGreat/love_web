@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.2.4",
     "@tsparticles/engine": "^3.9.1",
     "@tsparticles/react": "^3.0.0",
+    "@tsparticles/shape-heart": "^3.9.1",
     "@tsparticles/slim": "^3.9.1",
     "framer-motion": "^12.38.0",
     "react": "^19.2.5",
