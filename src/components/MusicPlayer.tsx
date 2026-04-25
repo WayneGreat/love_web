@@ -1,11 +1,28 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import config from "../config";
 
-function MusicPlayer() {
+export interface MusicPlayerHandle {
+    play: () => void;
+}
+
+const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_props, ref) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
+
+    useImperativeHandle(ref, () => ({
+        play: async () => {
+            const audio = audioRef.current;
+            if (!audio || isDisabled || isPlaying) return;
+            try {
+                await audio.play();
+                setIsPlaying(true);
+            } catch {
+                // Silently ignore
+            }
+        },
+    }));
 
     // Autoplay on mount: try play(), fall back to first-interaction activation
     useEffect(() => {
@@ -86,6 +103,6 @@ function MusicPlayer() {
             </motion.button>
         </>
     );
-}
+});
 
 export default MusicPlayer;
