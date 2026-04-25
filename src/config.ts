@@ -11,9 +11,16 @@ export interface ThemeColor {
     gradientTo: string;
 }
 
+export interface IntroConfig {
+    title: string;
+    subtitle: string;
+    hint: string;
+}
+
 export interface SiteConfig {
     bgMusic: string;
     themeColor: ThemeColor;
+    intro: IntroConfig;
     timeline: TimelineEntry[];
     letter: string;
 }
@@ -24,6 +31,11 @@ const siteConfig: SiteConfig = {
         primary: "#e91e63",
         gradientFrom: "#fce4ec",
         gradientTo: "#f8bbd0",
+    },
+    intro: {
+        title: "我们的故事",
+        subtitle: "从遇见你的那天起",
+        hint: "向下滚动 开启回忆",
     },
     timeline: [
         {
