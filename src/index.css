@@ -4,6 +4,26 @@
     --font-handwriting: "Dancing Script", cursive;
 }
 
+@keyframes float-heart {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-20px) scale(1.1);
+        opacity: 1;
+    }
+}
+
+.animate-float-heart {
+    animation: float-heart 3s ease-in-out infinite;
+}
+
+.animate-float-heart-delay {
+    animation: float-heart 3.5s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
 body {
     background: linear-gradient(135deg, #fce4ec, #f8bbd0);
     min-height: 100vh;
