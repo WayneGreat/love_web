@@ -56,7 +56,7 @@ function TimelineSection({ entry, index, onInView }: TimelineSectionProps) {
     return (
         <motion.section
             ref={ref}
-            className="h-screen snap-start flex items-center justify-center px-6"
+            className="h-screen flex items-center justify-center px-6"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}

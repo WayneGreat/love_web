@@ -13,12 +13,11 @@ function TimelineNav({ activeIndex, total, onNavigate }: TimelineNavProps) {
                 <button
                     key={i}
                     onClick={() => onNavigate(i)}
-                    className="p-1 outline-none"
+                    className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:rounded-full"
                     aria-label={`Go to section ${i + 1}`}
                 >
                     <motion.span
                         className="block w-3 h-3 rounded-full"
-                        layout
                         animate={
                             i === activeIndex
                                 ? { scale: 1.25, backgroundColor: "#e11d48" }
