@@ -71,16 +71,14 @@ function ParticleBackground() {
         [],
     );
 
-    if (!init) {
-        return null;
-    }
-
     return (
         <div className="fixed inset-0 z-0 pointer-events-none">
-            <Particles
-                id="heart-particles"
-                options={particlesOptions}
-            />
+            {init && (
+                <Particles
+                    id="heart-particles"
+                    options={particlesOptions}
+                />
+            )}
         </div>
     );
 }
