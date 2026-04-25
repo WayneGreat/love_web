@@ -33,6 +33,7 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
     }, [isInView, index, onInView]);
 
     const handleOpen = () => setIsOpen(true);
+    const handleClose = () => setIsOpen(false);
 
     return (
         <motion.div
@@ -84,6 +85,53 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
             <p className="text-sm text-rose-500 italic tracking-wide mt-6">
                 {config.letter.footer}
             </p>
+
+            {/* Fullscreen letter overlay */}
+            <AnimatePresence>
+                {isOpen && (
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            className="fixed inset-0 z-40 bg-pink-50/90 backdrop-blur-sm"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3, delay: 0.6 }}
+                        />
+
+                        {/* Letter card container */}
+                        <motion.div
+                            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+                            initial={{ opacity: 0, scale: 0.3, y: 120 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.3, y: 120 }}
+                            transition={{ duration: 0.5, ease: "easeOut" as const, delay: 0.8 }}
+                        >
+                            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-10 relative">
+                                {/* Close button */}
+                                <button
+                                    type="button"
+                                    onClick={handleClose}
+                                    aria-label="关闭信件"
+                                    className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center text-base sm:text-lg font-bold shadow-md hover:scale-110 focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none cursor-pointer transition-transform"
+                                >
+                                    ×
+                                </button>
+
+                                {/* Letter title */}
+                                <h3 className="text-2xl sm:text-3xl font-bold text-rose-700 text-center mb-6 sm:mb-8 font-handwriting">
+                                    {config.letter.title}
+                                </h3>
+
+                                {/* Letter body */}
+                                <div className="font-handwriting text-rose-700 text-base sm:text-lg leading-relaxed whitespace-pre-line text-center px-2">
+                                    {config.letter.body}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 }
