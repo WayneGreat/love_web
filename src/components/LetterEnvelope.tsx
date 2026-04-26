@@ -160,6 +160,19 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
                                             {line || " "}
                                         </motion.p>
                                     ))}
+                                    {config.letter.signature && (
+                                        <div className="text-right mt-8 pr-2">
+                                            {config.letter.signature.split("\n").map((line, i) => (
+                                                <motion.p
+                                                    key={`sig-${i}`}
+                                                    variants={textLineVariants}
+                                                    className="mb-0.5"
+                                                >
+                                                    {line}
+                                                </motion.p>
+                                            ))}
+                                        </div>
+                                    )}
                                 </motion.div>
                             </div>
                         </motion.div>
