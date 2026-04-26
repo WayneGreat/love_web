@@ -112,12 +112,10 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
                             className="fixed inset-0 z-40 bg-pink-50/95"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+                            exit={{ opacity: 0, transition: { duration: 0.25, delay: 0 } }}
                             transition={{
                                 duration: 0.4,
                                 delay: 0.5,
-                                exitDuration: 0.25,
-                                exitDelay: 0,
                             }}
                         />
 
@@ -126,12 +124,11 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
                             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
                             initial={{ opacity: 0, scale: 0.3, y: 120 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.2, ease: "easeIn" as const, delay: 0 } }}
                             transition={{
                                 duration: 0.5,
                                 ease: "easeOut" as const,
                                 delay: 0.8,
-                                exit: { duration: 0.2, ease: "easeIn" as const, delay: 0 },
                             }}
                         >
                             <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-10 relative">
@@ -152,7 +149,7 @@ function LetterEnvelope({ index, onInView }: LetterEnvelopeProps) {
 
                                 {/* Letter body with staggered reveal */}
                                 <motion.div
-                                    className="font-handwriting text-rose-700 text-base sm:text-lg leading-relaxed text-center px-2"
+                                    className="font-handwriting text-rose-700 text-base sm:text-lg leading-relaxed text-left whitespace-pre-wrap px-2"
                                     variants={textContainerVariants}
                                     initial="hidden"
                                     animate="visible"

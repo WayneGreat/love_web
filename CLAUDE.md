@@ -55,3 +55,9 @@ This project uses OpenSpec for requirements and Superpowers for implementation w
 - **Focus styles:** Never use bare `outline-none` on interactive elements. Pair with `focus-visible:ring-*` for keyboard accessibility.
 - **Language:** UI-facing comments and docs in Chinese; code comments in English.
 - **TypeScript `erasableSyntaxOnly`:** Enabled in tsconfig. Use `as const` assertions instead of `enum` or `namespace` syntax — only erasable type annotations are allowed.
+- **TypeScript `verbatimModuleSyntax`:** Enabled in tsconfig. Use `import type` for type-only imports (e.g., `import type { MusicPlayerHandle } from ...`).
+- **Intro flow:** App renders `IntroSplash` behind `AnimatePresence`; on exit, `showIntro` flips to `false`, main content mounts, and `musicPlayerRef.current?.play()` triggers autoplay.
+- **MusicPlayer ref:** Uses `forwardRef` + `useImperativeHandle` exposing a `play()` method via `MusicPlayerHandle` interface. Handles browser autoplay policy with first-interaction fallback.
+- **tsparticles cleanup:** Async engine initialization uses a cancellation flag in `useEffect` cleanup to prevent state updates after unmount.
+- **Font loading:** Dancing Script loaded via Google Fonts in `index.html` with `rel="preconnect"` for performance.
+- **Envelope animation:** CSS 3D transforms (`rotateX`) for flap, `clipPath: polygon()` for triangular flap shape, letter rises with `y: -120` transform.
