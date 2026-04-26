@@ -23,11 +23,17 @@ export interface LetterConfig {
     footer: string;
 }
 
+export interface PastLetter {
+    date: string;
+    body: string;
+}
+
 export interface SiteConfig {
     bgMusic: string;
     themeColor: ThemeColor;
     intro: IntroConfig;
     timeline: TimelineEntry[];
+    pastLetters: PastLetter[];
     letter: LetterConfig;
 }
 
@@ -79,6 +85,20 @@ const siteConfig: SiteConfig = {
             title: "第一个春节",
             desc: "一起守岁看烟花，新的一年也要在一起...",
             image: "images/pic6.png",
+        },
+    ],
+    pastLetters: [
+        {
+            date: "2023-08-15",
+            body: "亲爱的，\n\n这是我们的第一个七夕节。\n我永远不会忘记那一天的星空和你在灯光下的笑容。",
+        },
+        {
+            date: "2024-02-14",
+            body: "情人节快乐！\n\n第一次和你一起过西方的情人节，\n玫瑰和巧克力都不及你的万分之一甜。",
+        },
+        {
+            date: "2024-08-10",
+            body: "又一起走过了一年。\n\n时间飞逝，但每一秒因为有你而变得珍贵。\n期待下一个和你在一起的春夏秋冬。",
         },
     ],
     letter: {
