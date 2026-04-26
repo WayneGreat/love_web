@@ -91,7 +91,8 @@ const siteConfig: SiteConfig = {
     pastLetters: [
         {
             date: "2023-08-15",
-            body: "亲爱的，\n\n这是我们的第一个七夕节。\n我永远不会忘记那一天的星空和你在灯光下的笑容。",
+            // body: "亲爱的，\n\n这是我们的第一个七夕节。\n我永远不会忘记那一天的星空和你在灯光下的笑容。",
+            body: "最漂亮的林同学Lydia\n\n很开心有缘与你相识，对你的心动从第一次见面就开始了，因为你笑起来真好看。在与你交流的这段时间，你的乐观开朗，独立勇敢，幽默的性格吸引着我，甚至已经开始期待每天的哈哈哈。520快乐，祝永远年轻漂亮，工作愉快顺利。\n\n喜欢你的Wayne",
         },
         {
             date: "2024-02-14",
@@ -111,7 +112,7 @@ const siteConfig: SiteConfig = {
         谢谢你出现在我的生命里，谢谢你给我带来的所有快乐和感动。
         尽管我们相处之中有一些不愉快，但我会做出改变，变得成熟，让你有安全感
         未来的路还很长，我想一直牵着你的手走下去。`,
-        signature: `爱你的小狗\n${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日`,
+        signature: `爱你的小狗  \n${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日`,
         footer: "愿我们的故事一直继续下去 ✨",
     },
 };
