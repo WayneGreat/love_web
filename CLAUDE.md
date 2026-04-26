@@ -10,6 +10,12 @@ npm run build      # TypeScript check (tsc -b) + Vite production build
 npm run lint       # ESLint with flat config
 npm run preview    # Preview production build locally
 npx tsc --noEmit   # Type-only check without emit
+
+python serve_local.py              # Local build + serve with relative base path
+python serve_local.py --build-only # Build only, don't serve
+python serve_local.py --serve-only # Serve existing dist/ without rebuilding
+python serve_local.py --port 8080  # Use custom port (default: auto-find)
+python serve_local.py --no-browser # Don't auto-open browser
 ```
 
 No test framework is configured yet.
@@ -24,15 +30,21 @@ No test framework is configured yet.
 
 **Component layers (z-index):** ParticleBackground (z-0) → Content (z-10) → TimelineNav (z-20)
 
+**Scroll-snap sections:** The `Timeline` component renders wrapper divs with `snap-start` for three section types: `TimelineSection` entries, `PastLetters` carousel, and `LetterEnvelope`. Each wrapper holds the ref used for `scrollIntoView` navigation.
+
 **Animation pattern:** Framer Motion `useInView` hook drives both visibility detection and animation state. Use `animate={isInView ? "visible" : "hidden"}` instead of `whileInView` + `viewport` props to avoid duplicate IntersectionObservers on the same element. Variant objects define `hidden`/`visible` states with `staggerChildren` for coordinated entrance.
 
 **Scroll-snap:** `snap-y snap-mandatory` on the scroll container, `snap-start` on its **direct children only** (wrapper divs, not nested elements). `scrollIntoView` targets the wrapper div refs, not the section component internals.
 
 **Tailwind v4:** Configuration is CSS-first via `src/index.css` using `@theme` blocks. No `tailwind.config.js`. Custom fonts and colors are defined there. Utility classes follow Tailwind v4 syntax.
 
+**Asset organization:** Static assets (images, music) live in `public/images/` and `public/music/` and are referenced from `config.ts` by relative path (e.g., `images/pic1.png`). They are copied to `dist/` at build time with the same structure.
+
 ## Deployment
 
 `vite.config.ts` sets `base: '/love_web/'` for GitHub Pages subdirectory deployment. All asset paths in `dist/` include this prefix. Do not remove or change the base path without updating GitHub Pages configuration.
+
+**GitHub Actions:** `.github/workflows/deploy.yml` auto-builds and deploys to GitHub Pages on every push to `master`.
 
 **Local preview (Windows/offline):** `serve_local.py` handles the base-path mismatch — it temporarily patches `vite.config.ts` to `base: './'` (relative), runs `npm run build`, restores the original base, then serves `dist/` via Python's `http.server` with CORS headers. Run `python serve_local.py` for build+serve, or `--build-only` / `--serve-only` for separate steps.
 
@@ -61,3 +73,4 @@ This project uses OpenSpec for requirements and Superpowers for implementation w
 - **tsparticles cleanup:** Async engine initialization uses a cancellation flag in `useEffect` cleanup to prevent state updates after unmount.
 - **Font loading:** Dancing Script loaded via Google Fonts in `index.html` with `rel="preconnect"` for performance.
 - **Envelope animation:** CSS 3D transforms (`rotateX`) for flap, `clipPath: polygon()` for triangular flap shape, letter rises with `y: -120` transform.
+- **Custom keyframes:** `src/index.css` defines `@keyframes float-heart` and utility classes `.animate-float-heart` / `.animate-float-heart-delay` used by `IntroSplash` for floating heart decorations.
