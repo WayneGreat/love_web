@@ -20,6 +20,7 @@ export interface IntroConfig {
 export interface LetterConfig {
     title: string;
     body: string;
+    signature?: string;
     footer: string;
 }
 
@@ -109,9 +110,8 @@ const siteConfig: SiteConfig = {
         从第一次遇见你的心跳加速，到现在习惯了每天有你的陪伴，我才明白，原来幸福就是这么简单。
         谢谢你出现在我的生命里，谢谢你给我带来的所有快乐和感动。
         尽管我们相处之中有一些不愉快，但我会做出改变，变得成熟，让你有安全感
-        未来的路还很长，我想一直牵着你的手走下去。
-                                                                                                爱你的小狗
-                                                                                            ${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日`,
+        未来的路还很长，我想一直牵着你的手走下去。`,
+        signature: `爱你的小狗\n${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日`,
         footer: "愿我们的故事一直继续下去 ✨",
     },
 };
