@@ -20,11 +20,6 @@ function PasswordGate({ onVerify }: PasswordGateProps) {
         }
     }, [inputValue, onVerify, controls]);
 
-    const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            handleVerify();
-        }
-    }, [handleVerify]);
 
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -76,7 +71,6 @@ function PasswordGate({ onVerify }: PasswordGateProps) {
                         type="password"
                         value={inputValue}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}
                         placeholder={config.passwordGate.placeholder}
                         aria-label={config.passwordGate.ariaLabel}
                         aria-invalid={hasError}
