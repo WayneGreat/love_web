@@ -55,14 +55,6 @@ const siteConfig: SiteConfig = {
         gradientFrom: "#fce4ec",
         gradientTo: "#f8bbd0",
     },
-    password: "lwj0903",
-    passwordGate: {
-        title: "欢迎来到我们的世界",
-        subtitle: "请输入密令",
-        placeholder: "在这里输入密令...",
-        buttonText: "进入",
-        errorText: "密令不正确，请再试一次",
-    },
     intro: {
         title: "我们的故事",
         subtitle: "从遇见你的那天起",
@@ -139,6 +131,14 @@ const siteConfig: SiteConfig = {
         未来的路还很长，我想一直牵着你的手走下去。`,
         signature: `爱你的小狗    \n${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日`,
         footer: "愿我们的故事一直继续下去 ✨",
+    },
+    password: "lwj0903",
+    passwordGate: {
+        title: "欢迎来到我们的世界",
+        subtitle: "请输入密令",
+        placeholder: "在这里输入密令...",
+        buttonText: "进入",
+        errorText: "密令不正确，请再试一次",
     },
 };
 
