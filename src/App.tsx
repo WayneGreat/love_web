@@ -4,9 +4,11 @@ import ParticleBackground from "./components/ParticleBackground";
 import Timeline from "./components/Timeline";
 import MusicPlayer from "./components/MusicPlayer";
 import IntroSplash from "./components/IntroSplash";
+import PasswordGate from "./components/PasswordGate";
 import type { MusicPlayerHandle } from "./components/MusicPlayer";
 
 function App() {
+    const [passwordVerified, setPasswordVerified] = useState(false);
     const [showIntro, setShowIntro] = useState(true);
     const musicPlayerRef = useRef<MusicPlayerHandle>(null);
 
@@ -18,11 +20,16 @@ function App() {
     return (
         <div className="min-h-screen relative">
             <AnimatePresence>
-                {showIntro && (
+                {!passwordVerified && (
+                    <PasswordGate onVerify={() => setPasswordVerified(true)} />
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {passwordVerified && showIntro && (
                     <IntroSplash onExit={handleIntroExit} />
                 )}
             </AnimatePresence>
-            {!showIntro && (
+            {passwordVerified && !showIntro && (
                 <>
                     <ParticleBackground />
                     <div className="relative z-10">
