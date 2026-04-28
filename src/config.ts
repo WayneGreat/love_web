@@ -17,6 +17,14 @@ export interface IntroConfig {
     hint: string;
 }
 
+export interface PasswordGateConfig {
+    title: string;
+    subtitle: string;
+    placeholder: string;
+    buttonText: string;
+    errorText: string;
+}
+
 export interface LetterConfig {
     title: string;
     body: string;
@@ -36,6 +44,8 @@ export interface SiteConfig {
     timeline: TimelineEntry[];
     pastLetters: PastLetter[];
     letter: LetterConfig;
+    password: string;
+    passwordGate: PasswordGateConfig;
 }
 
 const siteConfig: SiteConfig = {
@@ -44,6 +54,14 @@ const siteConfig: SiteConfig = {
         primary: "#e91e63",
         gradientFrom: "#fce4ec",
         gradientTo: "#f8bbd0",
+    },
+    password: "lwj0903",
+    passwordGate: {
+        title: "欢迎来到我们的世界",
+        subtitle: "请输入密令",
+        placeholder: "在这里输入密令...",
+        buttonText: "进入",
+        errorText: "密令不正确，请再试一次",
     },
     intro: {
         title: "我们的故事",
