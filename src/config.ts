@@ -23,6 +23,7 @@ export interface PasswordGateConfig {
     placeholder: string;
     buttonText: string;
     errorText: string;
+    ariaLabel: string;
 }
 
 export interface LetterConfig {
@@ -139,6 +140,7 @@ const siteConfig: SiteConfig = {
         placeholder: "在这里输入密令...",
         buttonText: "进入",
         errorText: "密令不正确，请再试一次",
+        ariaLabel: "密令输入",
     },
 };
 

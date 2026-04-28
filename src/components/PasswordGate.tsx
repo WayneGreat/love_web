@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import config from "../config";
 
 interface PasswordGateProps {
@@ -9,29 +9,29 @@ interface PasswordGateProps {
 function PasswordGate({ onVerify }: PasswordGateProps) {
     const [inputValue, setInputValue] = useState("");
     const [hasError, setHasError] = useState(false);
-    const [shakeKey, setShakeKey] = useState(0);
+    const controls = useAnimation();
 
     const handleVerify = useCallback(() => {
         if (inputValue === config.password) {
             onVerify();
         } else {
             setHasError(true);
-            setShakeKey((k) => k + 1);
+            controls.start({ x: [0, -10, 10, -10, 10, 0], transition: { duration: 0.4 } });
         }
-    }, [inputValue, onVerify]);
+    }, [inputValue, onVerify, controls]);
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             handleVerify();
         }
-    };
+    }, [handleVerify]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
         if (hasError) {
             setHasError(false);
         }
-    };
+    }, [hasError]);
 
     return (
         <motion.div
@@ -64,52 +64,50 @@ function PasswordGate({ onVerify }: PasswordGateProps) {
             </p>
 
             {/* Input + button */}
-            <motion.div
-                key={shakeKey}
-                animate={
-                    hasError
-                        ? { x: [0, -10, 10, -10, 10, 0] }
-                        : { x: 0 }
-                }
-                transition={{ duration: 0.4 }}
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleVerify();
+                }}
                 className="flex flex-col items-center"
             >
-                <input
-                    type="password"
-                    value={inputValue}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder={config.passwordGate.placeholder}
-                    aria-label="密令输入"
-                    aria-invalid={hasError}
-                    aria-describedby={hasError ? "password-error" : undefined}
-                    autoFocus
-                    className="w-64 sm:w-80 px-6 py-3 rounded-full border-2 border-rose-300 bg-white/80 backdrop-blur-sm text-center text-rose-700 font-handwriting text-lg placeholder:text-rose-300 focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-400/50"
-                />
-                <AnimatePresence>
-                    {hasError && (
-                        <motion.p
-                            id="password-error"
-                            initial={{ opacity: 0, y: -5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -5 }}
-                            transition={{ duration: 0.2 }}
-                            className="mt-3 text-sm text-red-500 font-medium"
-                            role="alert"
-                        >
-                            {config.passwordGate.errorText}
-                        </motion.p>
-                    )}
-                </AnimatePresence>
-            </motion.div>
+                <motion.div animate={controls} className="flex flex-col items-center">
+                    <input
+                        type="password"
+                        value={inputValue}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        placeholder={config.passwordGate.placeholder}
+                        aria-label={config.passwordGate.ariaLabel}
+                        aria-invalid={hasError}
+                        aria-describedby={hasError ? "password-error" : undefined}
+                        autoFocus
+                        className="w-64 sm:w-80 px-6 py-3 rounded-full border-2 border-rose-300 bg-white/80 backdrop-blur-sm text-center text-rose-700 font-handwriting text-lg placeholder:text-rose-300 focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-400/50"
+                    />
+                    <AnimatePresence>
+                        {hasError && (
+                            <motion.p
+                                id="password-error"
+                                initial={{ opacity: 0, y: -5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -5 }}
+                                transition={{ duration: 0.2 }}
+                                className="mt-3 text-sm text-red-500 font-medium"
+                                role="alert"
+                            >
+                                {config.passwordGate.errorText}
+                            </motion.p>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
 
-            <button
-                type="button"
-                onClick={handleVerify}
-                className="mt-6 px-8 py-2.5 bg-rose-500 text-white rounded-full font-medium shadow-lg hover:bg-rose-600 hover:scale-105 focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none cursor-pointer transition-transform"
-            >
-                {config.passwordGate.buttonText}
-            </button>
+                <button
+                    type="submit"
+                    className="mt-6 px-8 py-2.5 bg-rose-500 text-white rounded-full font-medium shadow-lg hover:bg-rose-600 hover:scale-105 focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none cursor-pointer transition-transform"
+                >
+                    {config.passwordGate.buttonText}
+                </button>
+            </form>
         </motion.div>
     );
 }
