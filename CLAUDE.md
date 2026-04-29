@@ -28,7 +28,7 @@ No test framework is configured yet.
 
 **Config-driven content:** All site data (timeline entries, letter text, theme colors) lives in `src/config.ts`. Components read from this central config — never hardcode content.
 
-**Component layers (z-index):** ParticleBackground (z-0) → Content (z-10) → TimelineNav (z-20)
+**Component layers (z-index):** PasswordGate (z-[60]) → IntroSplash / LetterEnvelope overlay (z-50) → LetterEnvelope backdrop (z-40) → MusicPlayer (z-30) → TimelineNav (z-20) → Content (z-10) → ParticleBackground (z-0)
 
 **Scroll-snap sections:** The `Timeline` component renders wrapper divs with `snap-start` for three section types: `TimelineSection` entries, `PastLetters` carousel, and `LetterEnvelope`. Each wrapper holds the ref used for `scrollIntoView` navigation.
 
@@ -36,7 +36,7 @@ No test framework is configured yet.
 
 **Scroll-snap:** `snap-y snap-mandatory` on the scroll container, `snap-start` on its **direct children only** (wrapper divs, not nested elements). `scrollIntoView` targets the wrapper div refs, not the section component internals.
 
-**Tailwind v4:** Configuration is CSS-first via `src/index.css` using `@theme` blocks. No `tailwind.config.js`. Custom fonts and colors are defined there. Utility classes follow Tailwind v4 syntax.
+**Tailwind v4:** Configuration is CSS-first via `src/index.css` using `@theme` blocks. No `tailwind.config.js`. Custom fonts and colors are defined there. Utility classes follow Tailwind v4 syntax. Integration uses the `@tailwindcss/vite` Vite plugin (not PostCSS). The `@theme` block defines `--font-handwriting` for the `font-handwriting` utility used across components.
 
 **Asset organization:** Static assets (images, music) live in `public/images/` and `public/music/` and are referenced from `config.ts` by relative path (e.g., `images/pic1.png`). They are copied to `dist/` at build time with the same structure.
 
@@ -68,9 +68,9 @@ This project uses OpenSpec for requirements and Superpowers for implementation w
 - **Language:** UI-facing comments and docs in Chinese; code comments in English.
 - **TypeScript `erasableSyntaxOnly`:** Enabled in tsconfig. Use `as const` assertions instead of `enum` or `namespace` syntax — only erasable type annotations are allowed.
 - **TypeScript `verbatimModuleSyntax`:** Enabled in tsconfig. Use `import type` for type-only imports (e.g., `import type { MusicPlayerHandle } from ...`).
-- **Intro flow:** App renders `IntroSplash` behind `AnimatePresence`; on exit, `showIntro` flips to `false`, main content mounts, and `musicPlayerRef.current?.play()` triggers autoplay.
+- **Intro flow:** App renders a two-gate entry flow: `PasswordGate` (z-[60]) validates against `config.password`, then `IntroSplash` (z-50) dismisses on click/scroll. On intro exit, `showIntro` flips to `false`, main content mounts, and `musicPlayerRef.current?.play()` triggers autoplay.
 - **MusicPlayer ref:** Uses `forwardRef` + `useImperativeHandle` exposing a `play()` method via `MusicPlayerHandle` interface. Handles browser autoplay policy with first-interaction fallback.
 - **tsparticles cleanup:** Async engine initialization uses a cancellation flag in `useEffect` cleanup to prevent state updates after unmount.
 - **Font loading:** Dancing Script loaded via Google Fonts in `index.html` with `rel="preconnect"` for performance.
-- **Envelope animation:** CSS 3D transforms (`rotateX`) for flap, `clipPath: polygon()` for triangular flap shape, letter rises with `y: -120` transform.
-- **Custom keyframes:** `src/index.css` defines `@keyframes float-heart` and utility classes `.animate-float-heart` / `.animate-float-heart-delay` used by `IntroSplash` for floating heart decorations.
+- **Envelope animation:** CSS 3D transforms (`rotateX`) for flap, `clipPath: polygon()` for triangular flap shape. Opening triggers a fullscreen letter overlay with `scale: 0.3 → 1` and `y: 120 → 0` entrance animation, plus staggered text reveal via `textContainerVariants`.
+- **Custom keyframes:** `src/index.css` defines `@keyframes float-heart` and utility classes `.animate-float-heart` / `.animate-float-heart-delay` used by `IntroSplash` and `PasswordGate` for floating heart decorations.
