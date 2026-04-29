@@ -15,6 +15,7 @@ function PasswordGate({ onVerify }: PasswordGateProps) {
         if (inputValue === config.password) {
             onVerify();
         } else {
+            setInputValue("");
             setHasError(true);
             controls.start({ x: [0, -10, 10, -10, 10, 0], transition: { duration: 0.4 } });
         }
